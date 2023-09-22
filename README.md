@@ -11,5 +11,5 @@ pip install -r requirements.txt
 
 ## Usage
 ```
-uvucorn app:app --port 3000
+uvicorn app:app --port 3000
 ```
