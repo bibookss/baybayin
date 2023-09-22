@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Baybayin Classification</title>
+    <title>Baybayin</title>
     <style>
         canvas {
             border: 1px solid black;
@@ -10,14 +10,15 @@
     </style>
 </head>
 <body>
-    <h1>Baybayin Classification</h1>
-    
+    <h1>Baybayin</h1>
+
+    <h2 id="word"></h2>    
     <canvas id="drawingCanvas" width="200" height="200"></canvas>
-    <button id="predictButton">Predict</button>
+    <button id="submitButton">Predict</button>
     <button id="clearButton">Clear</button>
     
     <div id="predictionResult"></div>
 
-    <script src="app.js"></script>
+    <script type="module" src="main.js"></script>
 </body>
 </html>
