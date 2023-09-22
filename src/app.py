@@ -1,9 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
-from PIL import Image, ImageOps
 import tensorflow as tf
-import io
 import base64
 import uvicorn
 import os
@@ -12,20 +10,11 @@ import numpy as np
 
 app = FastAPI()
 
-def preprocess_image(image_data):
-    image = Image.open(io.BytesIO(image_data))
-    image = ImageOps.grayscale(image)
-    image = image.resize((28, 28))
-
-    try:
-        image.save('test.png')
-    except Exception as e:
-        print(f"Error saving image: {e}")
-
-    image = tf.keras.preprocessing.image.img_to_array(image)
-    image /= 255.0
-
-    return image
+def preprocess_image(base64_image_data):
+    image_bytes = base64.b64decode(base64_image_data)
+    image = cv2.imdecode(np.fromstring(image_bytes, np.uint8), cv2.IMREAD_GRAYSCALE)
+    image = cv2.resize(image, (28, 28))
+    image = np.array([image])  
 
 def predict_with_model(image):
     model = tf.keras.models.load_model('./model/baybayin_model.h5')
@@ -51,10 +40,6 @@ def upload_image(image_bytes):
 
 app.mount('/static', StaticFiles(directory='static', html=True), name='static')
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
 @app.post("/predict")
 async def predict(imageData: dict):
     try:
@@ -62,14 +47,8 @@ async def predict(imageData: dict):
         if not base64_image_data:
             raise HTTPException(status_code=400, detail="Image data not provided")
 
-        # Decode base64 image data
-        image_bytes = base64.b64decode(base64_image_data)
-
         # Preprocess image
-        image = upload_image(image_bytes)
-        image = cv2.imread(image, cv2.IMREAD_GRAYSCALE) 
-        image = cv2.resize(image, (28, 28))
-        image = np.array([image])  
+        image = preprocess_image(base64_image_data)
 
         prediction = predict_with_model(image)
 
