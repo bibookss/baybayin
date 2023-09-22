@@ -16,6 +16,8 @@ def preprocess_image(base64_image_data):
     image = cv2.resize(image, (28, 28))
     image = np.array([image])  
 
+    return image
+
 def predict_with_model(image):
     model = tf.keras.models.load_model('./model/baybayin_model.h5')
     label_word = ['de_di', 'pe_pi', 'to_tu', 'p', 'l', 'ra', 'ke_ki', 'lo_lu', 'd', 'po_pu', 'bo_bu', 'ha', 'ye_yi', 'ne_ni', 'n', 'nge_ngi', 'r', 'ng', 'ya', 'ta', 'la', 'w', 'ko_ku', 'da_ra', 'be_bi', 'me_mi', 'sa', 'ba', 'b', 'k', 'ma', 're_ri', 'm', 'nga', 'mo_mu', 't', 'se_si', 'do_du', 'o_u', 'no_nu', 'go_gu', 'he_hi', 'na', 'te_ti', 'le_li', 'ro_ru', 'ga', 'ngo_ngu', 'pa', 'wo_wu', 'wa', 'y', 'a', 'so_su', 'h', 'e_i', 'yo_yu', 'we_wi', 'ge_gi', 'g', 'ka', 'ho_hu', 's']
@@ -38,7 +40,6 @@ async def predict(imageData: dict):
 
         # Preprocess image
         image = preprocess_image(base64_image_data)
-
         prediction = predict_with_model(image)
 
         return JSONResponse(content={"prediction": prediction["letter"]}, status_code=200)
