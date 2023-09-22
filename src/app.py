@@ -27,17 +27,6 @@ def predict_with_model(image):
 
     return {"class_id": predicted_class, "probability": float(probability), "letter": predicted_letter}
 
-def upload_image(image_bytes):
-    UPLOAD_FOLDER = "uploads"
-    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-    filename = os.path.join(UPLOAD_FOLDER, "drawing.png")
-
-    with open(filename, "wb") as f:
-        f.write(image_bytes)
-    
-    return filename
-
 app.mount('/static', StaticFiles(directory='static', html=True), name='static')
 
 @app.post("/predict")
