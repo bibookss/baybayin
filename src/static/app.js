@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const x = e.clientX - drawingCanvas.getBoundingClientRect().left;
         const y = e.clientY - drawingCanvas.getBoundingClientRect().top;
     
-        context.lineWidth = 4;
+        context.lineWidth = 10;
         context.lineCap = 'round';
         context.strokeStyle = 'black';
 
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function sendImageForPrediction(base64ImageData) {
         console.log('Sending image data:', base64ImageData);
-        fetch('/predict', {
+        fetch('http://localhost:3000/predict', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
