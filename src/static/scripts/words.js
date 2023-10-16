@@ -1,5 +1,5 @@
 export const wordList = [
-    "buko"
+    "buko", "laro", "tasa", "bibo", "bato", "bola"
 ];
 
 export const vowels = [

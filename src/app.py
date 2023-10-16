@@ -4,7 +4,6 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import tensorflow as tf
 import base64
-import uvicorn
 import os
 import cv2
 import numpy as np
@@ -13,7 +12,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Update this with the appropriate origins
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -32,11 +31,22 @@ def predict_with_model(image):
     label_word = ['de_di', 'pe_pi', 'to_tu', 'p', 'l', 'ra', 'ke_ki', 'lo_lu', 'd', 'po_pu', 'bo_bu', 'ha', 'ye_yi', 'ne_ni', 'n', 'nge_ngi', 'r', 'ng', 'ya', 'ta', 'la', 'w', 'ko_ku', 'da_ra', 'be_bi', 'me_mi', 'sa', 'ba', 'b', 'k', 'ma', 're_ri', 'm', 'nga', 'mo_mu', 't', 'se_si', 'do_du', 'o_u', 'no_nu', 'go_gu', 'he_hi', 'na', 'te_ti', 'le_li', 'ro_ru', 'ga', 'ngo_ngu', 'pa', 'wo_wu', 'wa', 'y', 'a', 'so_su', 'h', 'e_i', 'yo_yu', 'we_wi', 'ge_gi', 'g', 'ka', 'ho_hu', 's']
 
     predictions = model.predict(image)
-    predicted_class = tf.argmax(predictions[0]).numpy()
-    probability = predictions[0][predicted_class]
-    predicted_letter = label_word[predicted_class]
 
-    return {"class_id": predicted_class, "probability": float(probability), "letter": predicted_letter}
+    # Get top 3 predictions
+    top_3 = tf.math.top_k(predictions, 3)
+    top_3_indices = top_3.indices.numpy()[0]
+    top_3_probabilities = top_3.values.numpy()[0]
+
+    # Make probabilities as percentage string
+    top_3_probabilities = [str(round(probability * 100, 2)) + "%" for probability in top_3_probabilities]
+    top_3_classes = [label_word[index] for index in top_3_indices]
+
+    result = zip(top_3_classes, top_3_probabilities)
+
+    print("Top 3 classes: ", top_3_classes)
+    print("Top 3 probabilities: ", top_3_probabilities)
+
+    return {"result": list(result)}
 
 @app.post("/api/predict")
 async def predict(imageData: dict):
@@ -47,9 +57,11 @@ async def predict(imageData: dict):
 
         # Preprocess image
         image = preprocess_image(base64_image_data)
+
+        # Predict
         prediction = predict_with_model(image)
 
-        return JSONResponse(content={"prediction": prediction["letter"]}, status_code=200)
+        return JSONResponse(content={"prediction": prediction["result"]}, status_code=200)
 
     except Exception as e:
         print(e)

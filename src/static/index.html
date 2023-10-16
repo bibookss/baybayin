@@ -42,10 +42,43 @@
         <h1 id="word" class="caption" style="font-size: 32px;"></h1>
         <canvas id="drawingCanvas" width="250" height="250" style="border: 4px solid #000;"></canvas>
         <div class="text-center mt-3">
-            <a id="clearButton" class="btn btn-secondary btn" role="button" onclick="">Burahin</a>
-            <a id="submitButton" class="btn btn-success btn" role="button" onclick="">I-submit</a>
+            <a id="clearButton" class="btn btn-secondary btn mr-5" role="button">I-clear</a>                    
+            <a id="submitButton" class="btn btn-success btn disabled" aria-disabled="true" role="button">I-submit</a>
         </div>
-        <div id="predictionResult"></div>
+
+        <div class="container text-center mt-3" id="predictionResult" style="display: none;">
+            <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Probability</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                        <th scope="row">1</th>
+                        <td class="prediction-class"></td>
+                        <td class="probability"></td>
+                  </tr>
+                  <tr>
+                        <th scope="row">2</th>
+                        <td class="prediction-class"></td>
+                        <td class="probability"></td>
+                  </tr>
+                  <tr>
+                        <th scope="row">3</th>
+                        <td class="prediction-class"></td>
+                        <td class="probability"></td>
+                  </tr>
+                </tbody>
+            </table>
+            <a id="correctButton" class="btn btn-outline-info mr-5" role="button">I-correct</a>
+            <a id="tryAgainButton" class="btn btn-secondary btn mr-2" role="button">Ulitin</a>
+            <a id="nextButton" class="btn btn-secondary btn disabled" aria-disabled="true" style="background-color: #F49526; border-color: #F49526;" role="button">Sunod</a>
+            <a id="newGameButton" class="btn btn-secondary btn mr" style="display: none;"  style="background-color: #F49526; border-color: #F49526;" role="button">Maglaro ulit</a>
+        </div>
+        
     </div>
     
     <!-- About -->

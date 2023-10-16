@@ -1,7 +1,8 @@
 export function sendImageForPrediction(base64ImageData) {
     console.log('Sending image for prediction...');
     // Make sure to change the IP to match the development endpoint.
-    const ip = '192.168.1.3'
+    // const ip = '192.168.2.117' 
+    const ip = '192.168.1.2'
     const url = `http://${ip}:3000/api/predict`; 
     return fetch(url, {
         method: 'POST',
