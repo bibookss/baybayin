@@ -1,7 +1,7 @@
 // main.js
-import { initializeCanvas, clearCanvas } from './components/canvas.js';
-import { sendImageForPrediction } from './components/api.js';
-import { Game } from './components/game.js';
+import { initializeCanvas, clearCanvas } from './scripts/canvas.js';
+import { sendImageForPrediction } from './scripts/api.js';
+import { Game } from './scripts/game.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const drawingCanvas = initializeCanvas();

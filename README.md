@@ -17,6 +17,7 @@ pip install -r requirements.txt
 ```
 
 ## Usage
+Make sure to change the api endpoint in `src/scripts/api` match your IP address
 ```
-uvicorn app:app --port 3000
+uvicorn app:app --reload --host 0.0.0.0 --port 3000
 ```
