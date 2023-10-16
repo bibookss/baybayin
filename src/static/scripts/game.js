@@ -1,23 +1,22 @@
 import { getRandomWord } from "./api.js";
 
-const vowels = [
-    'a', 'e', 'i', 'o', 'u'
-];
-
 export class Game {
     constructor() {
         this.initializeGame();
+
+        console.log('Game initialized!');
+        console.log('Word:', this.word);
+        console.log('Word length:', this.wordLength);
+        console.log('Index:', this.index);
     }
 
     async initializeGame() {
         try {
             const randomWordData = await getRandomWord();
             this.word = randomWordData['word'];  // Word to be guessed
-            this.definition = randomWordData['definition'];  // Definition of the word
             this.wordLength = this.word.length;
             this.index = 0;  // Index of the current character
             this.current_character = '';  // Current character to be written
-            this.attemptsLeft = 6;
 
             // Preprocess the word
             this.preprocessWord();
@@ -38,24 +37,61 @@ export class Game {
     
     getNextCharacter = function () {
         console.log('Getting next character...');
-
+        console.log('Index:', this.index);
+        console.log('Word length:', this.wordLength);
+        console.log('Word:', this.word);
+        
         // Clear current character
         this.current_character = '';
         
-        // Get the next character
-        for (let i = 0; i < 2; i++) {
-            if (this.index < this.wordLength || (i == 1 && this.isVowel(this.word[this.index]))) {
+        // Get first character
+        if (this.index < this.wordLength) {
+            this.current_character += this.word[this.index];
+            this.index++;
+        }
+
+        // Get second character
+        if (this.index < this.wordLength) {
+            if (this.isVowel(this.word[this.index]) && !this.isVowel(this.current_character[0]) || (this.word[this.index-1] == 'n' && this.word[this.index] == 'g')) {
                 this.current_character += this.word[this.index];
                 this.index++;
             }
         }
 
+        // Get third character
+        if (this.index < this.wordLength) {
+            if (this.current_character.length == 2 && this.current_character[1] == 'g') {
+                if (this.isVowel(this.word[this.index])) {
+                    this.current_character += this.word[this.index];
+                    this.index++;
+                }
+            }
+        }
+
         // Bold the current character in the word
         const word_div = document.getElementById('word');
-        word_div.innerHTML = this.word.replace(this.current_character, `<u><b>${this.current_character}</b></u>`);
+        const cc_length = this.current_character.length;
+        const start_index = this.index - cc_length;
+
+        // Make the characters from start_index to index-1 bold
+        let new_word = '';
+        for (let i = 0; i < this.word.length; i++) {
+            if (i >= start_index && i < this.index) {
+                new_word += `<u><b>${this.word[i]}</b></u>`;
+            } else {
+                new_word += this.word[i];
+            }
+        }
+
+        word_div.innerHTML = new_word;
+
+        console.log('Current character:', this.current_character);
     } 
 
     isVowel = function (letter) {
+        const vowels = [
+            'a', 'e', 'i', 'o', 'u'
+        ];
         return vowels.includes(letter);
     }
 
@@ -72,14 +108,10 @@ export class Game {
             }
         }
 
-        if (!isCorrect) {
-            this.attemptsLeft--;
-        }
-
         return isCorrect;
     }
 
     isGameWon = function () {
-        return this.index == this.wordLength && this.attemptsLeft >= 0;
+        return this.index == this.wordLength;
     };
 }

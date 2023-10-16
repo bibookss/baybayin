@@ -41,6 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearButton.style.display = 'none';
                 submitButton.style.display = 'none';
                 
+                // Unhide try again button
+                tryAgainButton.style.display = 'inline-block';
+
                 // Unhide the prediction result
                 predictionResult.style.display = 'block';
                 console.log('Prediction result:', data);
@@ -56,6 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (game.checkAnswer(answers)) {
                     console.log('You written correctly!');
                     
+                    // Make try again button inaccessible
+                    tryAgainButton.style.display = 'none';
+
                     // Make next button accessible
                     nextButton.classList.remove('disabled');
 
@@ -125,5 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Hide the prediction result
         predictionResult.style.display = 'none';
+
+        // Hide the new game button
+        newGameButton.style.display = 'none';
+
+        // Unhide next button
+        nextButton.style.display = 'inline-block';
     });
 });
