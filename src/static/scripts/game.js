@@ -1,19 +1,33 @@
-import { wordList, vowels } from './words.js';
+import { getRandomWord } from "./api.js";
+
+const vowels = [
+    'a', 'e', 'i', 'o', 'u'
+];
 
 export class Game {
     constructor() {
-        this.word = wordList[Math.floor(Math.random() * wordList.length)];  // Random word from word list
-        this.definition = '';  // Definition of the word
-        this.wordLength = this.word.length;
-        this.index = 0;  // Index of the current character
-        this.current_character = ''  // Current character to be written
-        this.attemptsLeft = 6;
+        this.initializeGame();
+    }
 
-        // Preprocess the word
-        this.preprocessWord();
+    async initializeGame() {
+        try {
+            const randomWordData = await getRandomWord();
+            this.word = randomWordData['word'];  // Word to be guessed
+            this.definition = randomWordData['definition'];  // Definition of the word
+            this.wordLength = this.word.length;
+            this.index = 0;  // Index of the current character
+            this.current_character = '';  // Current character to be written
+            this.attemptsLeft = 6;
 
-        // Get the next character
-        this.getNextCharacter();
+            // Preprocess the word
+            this.preprocessWord();
+
+            // Get the next character
+            this.getNextCharacter();
+        } catch (error) {
+            console.error('Error initializing game:', error);
+            // Handle the error, e.g., show an error message to the user
+        }
     }
 
     preprocessWord = function () {

@@ -5,8 +5,10 @@ from fastapi.middleware.cors import CORSMiddleware
 import tensorflow as tf
 import base64
 import os
+import csv
 import cv2
 import numpy as np
+import random
 
 app = FastAPI()
 
@@ -63,6 +65,29 @@ async def predict(imageData: dict):
 
         return JSONResponse(content={"prediction": prediction["result"]}, status_code=200)
 
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get('/api/words')
+async def get_random_word():
+    try:
+        file_path = os.path.join(os.getcwd(), 'dictionary', 'tagalog.csv')
+        with open(file_path, 'r') as f:
+            reader = csv.reader(f)
+            words = list(reader)
+
+        # Only get first column
+        words = [word[0] for word in words]
+
+        # Make lowercase and remove duplicates and empty strings and non-alphabetic characters
+        words = list(set([word.lower() for word in words if word != '' and word.isalpha()]))
+
+        # Only get words with whose length is between 4 and 8
+        words = [word for word in words if len(word) >= 4 and len(word) <= 8]
+
+        random_word = random.choice(words)
+        return JSONResponse(content={"word": random_word}, status_code=200)
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail=str(e))
