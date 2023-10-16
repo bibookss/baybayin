@@ -2,23 +2,134 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Baybayin</title>
-    <style>
-        canvas {
-            border: 1px solid black;
-        }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Baybayin</h1>
-
-    <h2 id="word"></h2>    
-    <canvas id="drawingCanvas" width="200" height="200"></canvas>
-    <button id="submitButton">Predict</button>
-    <button id="clearButton">Clear</button>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">Baybayin</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="toggleSections()">Maglaro</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     
-    <div id="predictionResult"></div>
+    <!-- Hero -->
+    <div class="jumbotron text-center" id="hero" style="padding-top: 70px;">
+        <h1 class="caption" style="font-size: 32px;">Matuto ng Baybayin,<br>Dalumatin ang Atin!</h1>
+        <img src="assets/hero.png" alt="Your Image" class="img-fluid mb-3">
+        <div class="text-right">
+            <a class="btn btn-primary btn"role="button" style="background-color: #F49526; border-color: #F49526;" onclick="toggleSections()">Maglaro na</a>
+        </div>
+    </div>
 
+    <!-- Game -->
+    <div class="jumbotron text-center" id="game" style="display: none; padding-top: 70px;">
+        <h1 id="word" class="caption" style="font-size: 32px;"></h1>
+        <canvas id="drawingCanvas" width="250" height="250" style="border: 4px solid #000;"></canvas>
+        <div class="text-center mt-3">
+            <a id="clearButton" class="btn btn-secondary btn" role="button" onclick="">Burahin</a>
+            <a id="submitButton" class="btn btn-success btn" role="button" onclick="">I-submit</a>
+        </div>
+        <div id="predictionResult"></div>
+    </div>
+    
+    <!-- About -->
+    <div class="container" id="about">
+        <h3 class="text-center mb-3 mt-3">Paano laruin?</h2>
+        <div class="row text-center">
+            <div class="col">
+                <img src="assets/book-1.png" alt="Image 1" class="img-fluid mb-4" width="55">
+                <p style="font-size: 14px;">Mula sa Filipino dictionary, pipili ng random na salita</p>
+            </div>
+            <div class="col">
+                <img src="assets/pen-1.png" alt="Image 2" class="img-fluid mb-4" width="55">
+                <p style="font-size: 14px;">Dapat mabaybay sa baybayin ang salitang ito</p>
+            </div>
+            <div class="col">
+                <img src="assets/ml-1.png" alt="Image 3" class="img-fluid mb-3" width="55">
+                <p style="font-size: 14px;">Susuriin ng isang machine learning model ang sagot</p>
+            </div>
+        </div>
+
+        <h3 class="text-center mb-3 mt-3">Para saan ang Baybayin?</h2>
+        <div class="row text-center mx-auto align-items-start mb-3">
+            <div class="col-4">
+                <img src="assets/www-1.png" alt="Image 3" class="img-fluid mb-3" width="80">
+            </div>
+            <div class="col-8 text-left">
+                <p class="text-justify" style="font-size: 14px;">Ang Baybayin ay isang web app na naglalayong magturo ng Baybayin sa paraan ng laro gamit ang kakayahan ng Machine Learning.</p>
+            </div>
+        </div>
+        <div class="row text-center mx-auto align-items-start mb-3">
+            <div class="col-4">
+                <img src="assets/flag-1.png" alt="Image 3" class="img-fluid mb-3" width="60">
+            </div>
+            <div class="col-8 text-left">
+                <p class="text-justify" style="font-size: 14px;">Nais nitong bigyan ng espasyo sa web ang kulturang Filipino upang mapalaganap at mapreserba ito</p>
+            </div>
+        </div>
+        <div class="row text-center mx-auto align-items-start mb-3">
+            <div class="col-4">
+                <img src="assets/laptop.png" alt="Image 3" class="img-fluid mb-3" width="60">
+            </div>
+            <div class="col-8 text-left">
+                <p class="text-justify" style="font-size: 14px;">Ang disiplina ng computer science ay hindi nagtatapos sa mga computer, laganap ang mga application nito</p>
+            </div>
+        </div>
+
+        <h3 class="text-center mb-3 mt-3">Ano ang Baybayin?</h3>
+        <div class="row text-center mx-auto align-items-start mb-3">
+            <div class="col-4">
+                <img src="assets/baybayin.png" alt="Image 3" class="img-fluid mb-3" width="100">
+            </div>
+            <div class="col-8 text-left">
+                <p class="text-justify" style="font-size: 14px;">Ang Baybayin ang dating sistemang panulat sa Pilipinas. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>                
+                <div class="text-right">
+                    <a class="btn btn-outline-dark" href="https://en.wikipedia.org/wiki/Baybayin" target="_blank">Alamin pa</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container pt-3 pb-3">
+            <span class="text-muted">© 2023 Albert Perez</span>
+        </div>
+    </footer>    
+
+    <script>
+        function toggleSections() {
+            var heroSection = document.getElementById('hero');
+            var gameSection = document.getElementById('game');
+
+            if (heroSection && gameSection) {
+                // Toggle the visibility of the sections
+                heroSection.style.display = (heroSection.style.display === 'none') ? 'block' : 'none';
+                gameSection.style.display = (gameSection.style.display === 'none') ? 'block' : 'none';
+            } else {
+                console.error("One or both elements not found.");
+            }
+        }
+    </script>
     <script type="module" src="main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

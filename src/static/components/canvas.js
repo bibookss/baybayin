@@ -1,4 +1,5 @@
 export function initializeCanvas() {
+    console.log('Initializing canvas...');
     const drawingCanvas = document.getElementById('drawingCanvas');
     const context = drawingCanvas.getContext('2d');
     let drawing = false;
@@ -6,24 +7,34 @@ export function initializeCanvas() {
     context.fillStyle = 'white';
     context.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
 
-    drawingCanvas.addEventListener('mousedown', (e) => {
+    // Mouse events
+    drawingCanvas.addEventListener('mousedown', startDrawing);
+    drawingCanvas.addEventListener('mouseup', stopDrawing);
+    drawingCanvas.addEventListener('mousemove', draw);
+
+    // Touch events
+    drawingCanvas.addEventListener('touchstart', startDrawing);
+    drawingCanvas.addEventListener('touchend', stopDrawing);
+    drawingCanvas.addEventListener('touchmove', draw);
+
+    function startDrawing(e) {
         drawing = true;
         context.beginPath();
         
-        const x = e.clientX - drawingCanvas.getBoundingClientRect().left;
-        const y = e.clientY - drawingCanvas.getBoundingClientRect().top;
+        const { x, y } = getCoordinates(e);
         context.moveTo(x, y);
-    });
-    
-    drawingCanvas.addEventListener('mouseup', () => {
+    }
+
+    function stopDrawing() {
         drawing = false;
-    });
+    }
+
+    function draw(e) {
+        e.preventDefault(); // Prevent the default behavior (scrolling)
     
-    drawingCanvas.addEventListener('mousemove', (e) => {
         if (!drawing) return;
     
-        const x = e.clientX - drawingCanvas.getBoundingClientRect().left;
-        const y = e.clientY - drawingCanvas.getBoundingClientRect().top;
+        const { x, y } = getCoordinates(e);
     
         context.lineWidth = 10;
         context.lineCap = 'round';
@@ -31,7 +42,19 @@ export function initializeCanvas() {
     
         context.lineTo(x, y);
         context.stroke();
-    });
+    }
+
+    function getCoordinates(e) {
+        let x, y;
+        if (e.touches && e.touches.length > 0) {
+            x = e.touches[0].clientX - drawingCanvas.getBoundingClientRect().left;
+            y = e.touches[0].clientY - drawingCanvas.getBoundingClientRect().top;
+        } else {
+            x = e.clientX - drawingCanvas.getBoundingClientRect().left;
+            y = e.clientY - drawingCanvas.getBoundingClientRect().top;
+        }
+        return { x, y };
+    }
 
     return drawingCanvas;
 }
