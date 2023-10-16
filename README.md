@@ -6,11 +6,12 @@ The model is from Kaggle user [DANIELLE "ALGOREX" BAGAFORO](https://www.kaggle.c
 
 ## To do
 - [x] Scrape https://tagalog.pinoydictionary.com for Tagalog words
-- [] Create an API for the scraped website, or use already existing ones
+- [ ] Create an API for the scraped website, or use already existing ones
 - [x] Implement character match per word 
 - [x] Design a UI/UX  
 - [x] Find a Filipino dictionary since Tagalog is limited 
 - [ ] Change font and font colors
+- [ ] Allow users to contribute their handwriting to train the model better
 
 ## Installation
 ```
