@@ -1,5 +1,5 @@
 # Baybayin
-Baybayin is spelling game for practicing writing in Baybayin for our Dalumat Ng/Sa Filipino class.
+Baybayin is an innovative mobile-first web application designed to celebrate the rich cultural heritage of the Philippines through the exploration of Baybayin, a pre-colonial script used by Filipino natives. Serving as a spelling game, the application offers users an engaging experience while simultaneously contributing to the advancement of Baybayin handwriting recognition technology. By providing a platform for users to interact with and spell words in Baybayin, the app collects valuable data that enhances the machine learning model's proficiency in recognizing and interpreting these ancient scripts. Embrace the beauty of Filipino history and contribute to the future of technology with Baybayin—an educational and entertaining journey into the heart of indigenous Philippine culture.
 
 ## Model
 The model is from Kaggle user [DANIELLE "ALGOREX" BAGAFORO](https://www.kaggle.com/code/daniellebagaforomeer/baybayin-classifier-using-neural-networks/notebook)'s Baybayin Classifier using Neural Networks.
