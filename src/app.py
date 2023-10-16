@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 import tensorflow as tf
 import base64
 import uvicorn
@@ -9,6 +10,14 @@ import cv2
 import numpy as np
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Update this with the appropriate origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def preprocess_image(base64_image_data):
     image_bytes = base64.b64decode(base64_image_data)
@@ -29,9 +38,7 @@ def predict_with_model(image):
 
     return {"class_id": predicted_class, "probability": float(probability), "letter": predicted_letter}
 
-app.mount('/static', StaticFiles(directory='static', html=True), name='static')
-
-@app.post("/predict")
+@app.post("/api/predict")
 async def predict(imageData: dict):
     try:
         base64_image_data = imageData.get("imageData")
@@ -48,5 +55,4 @@ async def predict(imageData: dict):
         print(e)
         raise HTTPException(status_code=500, detail=str(e))
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=3000)
+app.mount('/', StaticFiles(directory='static', html=True), name='static')
