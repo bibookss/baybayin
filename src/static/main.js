@@ -1,4 +1,3 @@
-// main.js
 import { initializeCanvas, clearCanvas, isCanvasBlank } from './scripts/canvas.js';
 import { sendImageForPrediction } from './scripts/api.js';
 import { Game } from './scripts/game.js';
@@ -52,6 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 let predictionClassRows = document.getElementsByClassName('prediction-class'); 
                 let probabilityRows = document.getElementsByClassName('probability');
                 for (let i = 0; i < predictionClassRows.length; i++) {
+                    // Replace underscores with commas
+                    answers[i][0] = answers[i][0].replace(/_/g, ', ');
                     predictionClassRows[i].innerHTML = answers[i][0];
                     probabilityRows[i].innerHTML = answers[i][1];
                 }
@@ -118,6 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Get the next character
         game.getNextCharacter();
+
+        // Update button state
+        updateButtonState();
     });
 
     newGameButton.addEventListener('click', () => {

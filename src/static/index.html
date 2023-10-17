@@ -4,25 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Baybayin</title>
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Montserrat:wght@400;500&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <a class="navbar-brand" href="#">Baybayin</a>
+        <a class="navbar-brand title" href="#">Baybayin</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#hero" onclick="setActive('home');">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="toggleSections()">Maglaro</a>
+                    <a class="nav-link" href="#" onclick="toggleSections(); setActive('game')">Maglaro</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#about">About</a>
+                    <a class="nav-link" href="#" onclick="toggleSections();" >Magambag</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#cheatsheet" onclick="setActive('cheatsheet');">Baybayin Cheatsheet</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about" onclick="setActive('about');">About</a>
                 </li>
             </ul>
         </div>
@@ -30,10 +40,10 @@
     
     <!-- Hero -->
     <div class="jumbotron text-center" id="hero" style="padding-top: 70px;">
-        <h1 class="caption" style="font-size: 32px;">Matuto ng Baybayin,<br>Dalumatin ang Atin!</h1>
+        <h1 class="caption mb-3" style="font-size: 32px;">Matuto ng Baybayin,<br>Dalumatin ang Atin!</h1>
         <img src="assets/hero.png" alt="Your Image" class="img-fluid mb-3">
         <div class="text-right">
-            <a class="btn btn-primary btn"role="button" style="background-color: #F49526; border-color: #F49526;" onclick="toggleSections()">Maglaro na</a>
+            <a class="btn btn-primary" role="button" style="background-color: #F49526; border-color: #F49526;" onclick="toggleSections()">Maglaro na</a>
         </div>
     </div>
 
@@ -73,33 +83,35 @@
                   </tr>
                 </tbody>
             </table>
-            <a id="correctButton" class="btn btn-outline-info mr-5" role="button">I-correct</a>
+            <a id="correctButton" class="btn btn-outline-info mr-5" style="display: none;" role="button">I-correct</a>
             <a id="tryAgainButton" class="btn btn-secondary btn mr-2" role="button">Ulitin</a>
             <a id="nextButton" class="btn btn-secondary btn disabled" aria-disabled="true" style="background-color: #F49526; border-color: #F49526;" role="button">Sunod</a>
-            <a id="newGameButton" class="btn btn-secondary btn mr" style="display: none;"  style="background-color: #F49526; border-color: #F49526;" role="button">Maglaro ulit</a>
+            <a id="newGameButton" class="btn btn-secondary btn mr" style="background-color: #F49526; border-color: #F49526; display: none;" role="button">Maglaro ulit</a>
         </div>
         
     </div>
     
+    <!-- Contribute -->
+
     <!-- About -->
     <div class="container" id="about">
-        <h3 class="text-center mb-3 mt-3">Paano laruin?</h2>
+        <h3 class="text-center mb-3 mt-3 title">Paano laruin?</h2>
         <div class="row text-center">
             <div class="col">
-                <img src="assets/book-1.png" alt="Image 1" class="img-fluid mb-4" width="55">
+                <img src="assets/book-1.png" alt="Image 1" class="img-fluid mb-3" width="55" height="55">
                 <p style="font-size: 14px;">Mula sa Filipino dictionary, pipili ng random na salita</p>
             </div>
             <div class="col">
-                <img src="assets/pen-1.png" alt="Image 2" class="img-fluid mb-4" width="55">
+                <img src="assets/pen-1.png" alt="Image 2" class="img-fluid mb-3" width="55" height="55">
                 <p style="font-size: 14px;">Dapat mabaybay sa baybayin ang salitang ito</p>
             </div>
             <div class="col">
-                <img src="assets/ml-1.png" alt="Image 3" class="img-fluid mb-3" width="55">
+                <img src="assets/ml-1.png" alt="Image 3" class="img-fluid mb-2" width="55" height="55">
                 <p style="font-size: 14px;">Susuriin ng isang machine learning model ang sagot</p>
             </div>
         </div>
 
-        <h3 class="text-center mb-3 mt-3">Para saan ang Baybayin?</h2>
+        <h3 class="text-center mb-3 mt-3 title">Para saan ang Baybayin?</h2>
         <div class="row text-center mx-auto align-items-start mb-3">
             <div class="col-4">
                 <img src="assets/www-1.png" alt="Image 3" class="img-fluid mb-3" width="80">
@@ -121,35 +133,40 @@
                 <img src="assets/laptop.png" alt="Image 3" class="img-fluid mb-3" width="60">
             </div>
             <div class="col-8 text-left">
-                <p class="text-justify" style="font-size: 14px;">Ang disiplina ng computer science ay hindi nagtatapos sa mga computer, laganap ang mga application nito</p>
+                <p class="text-justify" style="font-size: 14px;">Upang maging mas accurate ang mga machine learning models para sa Baybayin handwriting recognition, nais ng app na itong kumolekta ng karagdagang data para sa ka ikalalago ng accuracy ng model na ito.</p>
             </div>
         </div>
 
-        <h3 class="text-center mb-3 mt-3">Ano ang Baybayin?</h3>
+        <h3 class="text-center mb-3 mt-3 title">Ano ang Baybayin?</h3>
         <div class="row text-center mx-auto align-items-start mb-3">
             <div class="col-4">
                 <img src="assets/baybayin.png" alt="Image 3" class="img-fluid mb-3" width="100">
             </div>
             <div class="col-8 text-left">
-                <p class="text-justify" style="font-size: 14px;">Ang Baybayin ang dating sistemang panulat sa Pilipinas. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>                
+                <p class="text-justify" style="font-size: 14px;">Ang Baybayin ang dating sistemang panulat sa Pilipinas bago ang panahon ng mga Español. Laganap ito sa bansa at nag-evolve ito nang ma-adapt sa iba't ibang lugar sa Pilipinas. Sa kasalukuyan, mayroong nakikitang revival sa paggamit nito.</p>                
                 <div class="text-right">
                     <a class="btn btn-outline-dark" href="https://en.wikipedia.org/wiki/Baybayin" target="_blank">Alamin pa</a>
                 </div>
             </div>
         </div>
-
-        <h3 class="text-center mb-3 mt-3">Baybayin Cheatsheet</h3>
+ 
+        <h3 class="text-center mb-3 mt-3 title">Baybayin Cheatsheet</h3>
         <div class="row">
-            <div class="col-md-6 mx-auto text-center">
-                <img src="https://qph.cf2.quoracdn.net/main-qimg-a5ae0e74f5d0ef9980e7b1c59fdf2014-lq" alt="Image 3" class="img-fluid mb-3 mx-auto d-block">
+            <div class="col mx-auto text-center">
+                <img src="https://www.omniglot.com/images/writing/baybayin.gif" alt="Image 3" class="img-fluid mb-3 mx-auto d-block">
+            </div>
+        </div>
+        <div class="row" id="cheatsheet">
+            <div class="col text-right">
+                <p>
+                    Mula sa <a href="https://www.omniglot.com/images/writing/baybayin.gif">Omniglot</a>
+                </p>
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col text-right">
-                <p>
-                    Image from <a href="https://www.quora.com/What-would-the-Philippines-be-like-if-we-used-Baybayin-as-our-writing-system">Quora</a>
-                </p>
-            </div>
+            <p class="col text-align-start">
+                Ang Baybayin ay maraming anyo. Ang ginamit sa web app na ito ay matatagpuan sa <a href="https://www.kaggle.com/code/daniellebagaforomeer/baybayin-classifier-using-neural-networks#Sample-Images-:-de-or-di-(10-Samples)">Kaggle</a>.
+            </p>
         </div>
     </div>
     
@@ -172,6 +189,25 @@
             } else {
                 console.error("One or both elements not found.");
             }
+        }
+
+        function setActive(section) {
+            var element = document.getElementById(section);
+            
+            if (element) {
+                // Check if the element exists before manipulating it
+                element.classList.add('active');
+            } else {
+                console.error('Element with ID ' + section + ' not found.');
+            }
+
+            $('.navbar-collapse').collapse('hide');
+        }
+
+
+        function closeNavbar() {
+            // Close the navbar by removing the 'show' class
+            document.querySelector('.navbar-collapse').classList.remove('show');
         }
     </script>
     <script type="module" src="main.js"></script>
