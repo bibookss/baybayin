@@ -89,7 +89,7 @@ async def get_random_word():
         words = list(set([word.lower() for word in words if word != '' and word.isalpha()]))
 
         # Only get words with whose length is between 4 and 8
-        words = [word for word in words if len(word) >= 4 and len(word) <= 5]
+        words = [word for word in words if len(word) >= 4 and len(word) <= 8]
 
         random_word = random.choice(words)
         return JSONResponse(content={"word": random_word}, status_code=200)
