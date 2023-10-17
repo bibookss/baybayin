@@ -9,6 +9,7 @@ import csv
 import cv2
 import numpy as np
 import random
+from datetime import datetime
 
 app = FastAPI()
 
@@ -19,6 +20,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Create uploads folder if it doesn't exist
+if not os.path.exists('uploads'):
+    os.makedirs('uploads')
 
 def preprocess_image(base64_image_data):
     image_bytes = base64.b64decode(base64_image_data)
@@ -88,6 +93,25 @@ async def get_random_word():
 
         random_word = random.choice(words)
         return JSONResponse(content={"word": random_word}, status_code=200)
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post('/api/collect')
+async def upload_image(imageData: dict):
+    try:
+        base64_image_data = imageData.get("imageData")
+        character = imageData.get("character")
+
+        # Preprocess image
+        image = preprocess_image(base64_image_data)
+
+        # Save image to uploads folder
+        filename = character + '.' + datetime.now().strftime("%Y%m%d%H%M%S") + str(random.randint(0, 100000))
+        cv2.imwrite(os.path.join(os.getcwd(), 'uploads', filename + '.jpg'), image[0])
+
+        return JSONResponse(content={"result": 'success!'}, status_code=200)
+
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail=str(e))

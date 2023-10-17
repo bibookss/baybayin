@@ -1,17 +1,22 @@
 import { initializeCanvas, clearCanvas, isCanvasBlank } from './scripts/canvas.js';
-import { sendImageForPrediction } from './scripts/api.js';
+import { sendImageForPrediction, sendImageForCollection } from './scripts/api.js';
 import { Game } from './scripts/game.js';
+import { Contribute } from './scripts/contribute.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const drawingCanvas = initializeCanvas();
+    const drawingCanvas = initializeCanvas('drawingCanvas');
+    const drawingCanvasContribute = initializeCanvas('drawingCanvasContribute');
     const submitButton = document.getElementById('submitButton');
     const clearButton = document.getElementById('clearButton');
     const tryAgainButton = document.getElementById('tryAgainButton');
     const nextButton = document.getElementById('nextButton');
     const predictionResult = document.getElementById('predictionResult');
     const newGameButton = document.getElementById('newGameButton');
+    const clearButtonContribute = document.getElementById('clearButtonContribute');
+    const submitButtonContribute = document.getElementById('submitButtonContribute');
 
     let game = new Game();
+    let contribute = new Contribute();
     
     function updateButtonState() {
         if (!isCanvasBlank(drawingCanvas)) {
@@ -23,10 +28,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitButton.setAttribute('aria-disabled', 'true');
             }
         }
+            
+        if (!isCanvasBlank(drawingCanvasContribute)) {
+            submitButtonContribute.classList.remove('disabled');
+            submitButtonContribute.setAttribute('aria-disabled', 'false');
+        } else {
+            if (!submitButtonContribute.classList.contains('disabled')) {
+                submitButtonContribute.classList.add('disabled');
+                submitButtonContribute.setAttribute('aria-disabled', 'true');
+            }
+        }
     }
 
     // Update button state if canvas is not blank
     drawingCanvas.addEventListener('touchmove', updateButtonState);
+    drawingCanvasContribute.addEventListener('touchmove', updateButtonState);
 
     submitButton.addEventListener('click', () => {
         const imageData = drawingCanvas.toDataURL('image/png');
@@ -138,5 +154,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Unhide next button
         nextButton.style.display = 'inline-block';
+    });
+
+    clearButtonContribute.addEventListener('click', () => {
+        clearCanvas(drawingCanvasContribute);
+    });
+
+    submitButtonContribute.addEventListener('click', () => {
+        console.log('Submitting image for contribution...');
+
+        const imageData = drawingCanvasContribute.toDataURL('image/png');
+        const base64ImageData = imageData.replace(/^data:image\/png;base64,/, '');
+        let character = document.getElementById('character').innerHTML;
+        character = character.replace(/, /g, '_');
+
+        console.log('Submitting for:', character);
+        sendImageForCollection(base64ImageData, character).then(data => {
+            console.log('Contribution result:', data);
+
+            // Clear the canvas
+            clearCanvas(drawingCanvasContribute);
+
+            // Get the next character
+            contribute.getCharacter();
+        }).catch(error => {
+            console.error('Contribution error:', error);
+        });
     });
 });

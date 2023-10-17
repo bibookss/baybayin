@@ -1,6 +1,6 @@
-export function initializeCanvas() {
+export function initializeCanvas(id) {
     console.log('Initializing canvas...');
-    const drawingCanvas = document.getElementById('drawingCanvas');
+    const drawingCanvas = document.getElementById(id);
     const context = drawingCanvas.getContext('2d');
     let drawing = false;
 
