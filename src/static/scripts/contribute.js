@@ -10,11 +10,16 @@ export class Contribute {
         // Get the character div
         const character_div = document.getElementById('character');
 
+        console.log('Index:', this.index)
+        console.log('Characters:', this.characters.length)
+
         if (this.index == this.characters.length) {
             console.log('No more characters to display!');
             character_div.innerHTML = 'Salamat!';
 
             this.index = 0;
+
+            return;
         }
 
         const parsed_character = this.characters[this.index].replace(/_/g, ', ');

@@ -158,6 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     clearButtonContribute.addEventListener('click', () => {
         clearCanvas(drawingCanvasContribute);
+
+        updateButtonState();
     });
 
     submitButtonContribute.addEventListener('click', () => {
@@ -174,6 +176,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Clear the canvas
             clearCanvas(drawingCanvasContribute);
+
+            // Update button state
+            updateButtonState();
 
             // Get the next character
             contribute.getCharacter();
