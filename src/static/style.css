@@ -22,3 +22,11 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
 }
+
+b {
+    background: linear-gradient(
+        to bottom,
+        transparent 50%,
+        #F49526 50%
+    );
+}

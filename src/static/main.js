@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const drawingCanvas = initializeCanvas();
     const submitButton = document.getElementById('submitButton');
     const clearButton = document.getElementById('clearButton');
-    const correctButton = document.getElementById('correctButton');
     const tryAgainButton = document.getElementById('tryAgainButton');
     const nextButton = document.getElementById('nextButton');
     const predictionResult = document.getElementById('predictionResult');
@@ -15,8 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let game = new Game();
     
     function updateButtonState() {
-        console.log('Updating button state...');
-        console.log('Is canvas blank:', isCanvasBlank(drawingCanvas));
         if (!isCanvasBlank(drawingCanvas)) {
             submitButton.classList.remove('disabled');
             submitButton.setAttribute('aria-disabled', 'false');
@@ -52,8 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 let probabilityRows = document.getElementsByClassName('probability');
                 for (let i = 0; i < predictionClassRows.length; i++) {
                     // Replace underscores with commas
-                    answers[i][0] = answers[i][0].replace(/_/g, ', ');
-                    predictionClassRows[i].innerHTML = answers[i][0];
+                    let parsedAns = answers[i][0].replace(/_/g, ', ');
+                    predictionClassRows[i].innerHTML = parsedAns;
                     probabilityRows[i].innerHTML = answers[i][1];
                 }
 

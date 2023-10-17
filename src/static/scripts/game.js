@@ -13,7 +13,7 @@ export class Game {
     async initializeGame() {
         try {
             const randomWordData = await getRandomWord();
-            this.word = randomWordData['word'];  // Word to be guessed
+            this.word = randomWordData['word']  // Word to be guessed
             this.wordLength = this.word.length;
             this.index = 0;  // Index of the current character
             this.current_character = '';  // Current character to be written
@@ -77,7 +77,7 @@ export class Game {
         let new_word = '';
         for (let i = 0; i < this.word.length; i++) {
             if (i >= start_index && i < this.index) {
-                new_word += `<u><b>${this.word[i]}</b></u>`;
+                new_word += `<b>${this.word[i]}</b>`;
             } else {
                 new_word += this.word[i];
             }
@@ -99,6 +99,7 @@ export class Game {
         let isCorrect = false;
         for (let i = 0; i < answers.length; i++) {
             let answers_list = answers[i][0].split('_');
+
             for (let j = 0; j < answers_list.length; j++) {
                 console.log(answers_list[j]);
                 if (answers_list[j] == this.current_character) {
