@@ -43,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update button state if canvas is not blank
     drawingCanvas.addEventListener('touchmove', updateButtonState);
     drawingCanvasContribute.addEventListener('touchmove', updateButtonState);
+    drawingCanvas.addEventListener('mousemove', updateButtonState);
+    drawingCanvasContribute.addEventListener('mousemove', updateButtonState);
 
     submitButton.addEventListener('click', () => {
         const imageData = drawingCanvas.toDataURL('image/png');

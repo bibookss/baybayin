@@ -6,6 +6,11 @@ export function initializeCanvas(id) {
 
     context.fillStyle = 'white';
     context.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+    // Set the imageSmoothingEnabled property to true
+    context.imageSmoothingEnabled = true;
+
+    // Set the willReadFrequently attribute to true
+    drawingCanvas.willReadFrequently = true;
 
     // Mouse events
     drawingCanvas.addEventListener('mousedown', startDrawing);
