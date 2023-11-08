@@ -1,6 +1,5 @@
 fastapi
-PILLOW
 tensorflow
 uvicorn
-opencv-python-headless
+opencv-python
 numpy
