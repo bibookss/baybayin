@@ -1,4 +1,4 @@
-const ip = '192.168.176.193'
+const ip = '192.168.2.116'
 
 export function sendImageForPrediction(base64ImageData) {
     console.log('Sending image for prediction...');
