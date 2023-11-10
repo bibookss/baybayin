@@ -1,9 +1,6 @@
-const ip = '192.168.2.116'
-
 export function sendImageForPrediction(base64ImageData) {
     console.log('Sending image for prediction...');
-    // Make sure to change the IP to match the development endpoint.
-    const url = `http://${ip}:3000/api/predict`; 
+    const url = `http://0.0.0.0:3000/api/predict`; 
     return fetch(url, {
         method: 'POST',
         headers: {
@@ -22,7 +19,7 @@ export function sendImageForPrediction(base64ImageData) {
 
 export async function getRandomWord() {
     console.log('Getting random word...');
-    const url = `http://${ip}:3000/api/words`;
+    const url = `http://0.0.0.0:3000/api/words`;
     return fetch(url)
         .then(response => {
             if (!response.ok) {
