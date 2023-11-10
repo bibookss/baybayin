@@ -5,7 +5,7 @@ FROM python:3.9
 WORKDIR /app
 
 # Install libraries
-RUN apt-get update && apt-get install libsm6 libxext6  -y
+RUN apt-get update && apt-get install libgl1 -y
 
 # Copy your FastAPI application code and related files
 COPY src/ /app/
