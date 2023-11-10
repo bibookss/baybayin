@@ -4,12 +4,15 @@ FROM python:3.9
 # Set the working directory in the container
 WORKDIR /app
 
+# Install libraries
+RUN apt-get update && apt-get install libsm6 libxext6  -y
+
 # Copy your FastAPI application code and related files
 COPY src/ /app/
 COPY requirements.txt .
 
 # Install dependencies
-RUN pip install -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Expose the port the FastAPI app will run on
 EXPOSE 3000
